@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var arr = [1, 2, 3, 23, 5, 8, 6, 9, 7, 8, 9, 5, 6];
+
+        Array.prototype.mySplice = function (n, m, ...obj) {
+            let arr2 = [];
+            let arr3 = [];
+            for (var i = 0, c = n; i < m; c++, i++) {
+                arr2[i] = this[c]; //获取删除的内容 也是方法返回的内容
+            }
+            for (var j = 0; j < n; j++) {
+                arr3[j] = this[j] // 将n前面的原数组的内容放到新的数组中
+            }
+            for (var i = 0, u = n; i < obj.length; i++, u++) {
+                arr3[u] = obj[i]; // 将obj的内容放到n开始 m个索引中
+            }
+            let bian = this.length - m - n;
+            for (var i = n + obj.length; i < (n + obj.length + bian); i++) {
+                arr3[i] = this[i - obj.length + m]; // 将原数组剩余的内容放到新数组里面
+            }
+            this.length = arr3.length; // 将原数组的内容放到
+            for (var i = 0; i < this.length; i++) {
+                this[i] = arr3[i];
+            }
+            //由于push 返回值 是一个数组的长度 所以 我们来个return；
+            return arr2;
+        };
+        alert(arr.mySplice(3, 3, 9000, 456464, 56522, 1, 2, 3, 5, 6, 8, 7)) //-----结果 [23,5,8];
+        alert(arr);//-----结果 [1,2,3,9000,456464,56522,1,2,3,5,6,8,7,6,9,7,8,9,5,6];
+    </script>
+</body>
+
+</html>
